@@ -159,9 +159,9 @@ ai-test-bed/
 
 This project uses **GitHub Actions** to run automated checks on every pull request targeting `main`. The workflow lives in `.github/workflows/ci.yml` and includes two jobs:
 
-| Job | What it checks |
-|------|----------------|
-| **Lint** | ESLint rules and Prettier formatting |
+| Job      | What it checks                                       |
+| -------- | ---------------------------------------------------- |
+| **Lint** | ESLint rules and Prettier formatting                 |
 | **Test** | TypeScript build, Jest unit tests, and code coverage |
 
 ### Coverage Requirements
@@ -169,6 +169,7 @@ This project uses **GitHub Actions** to run automated checks on every pull reque
 Jest is configured with a **minimum 70% coverage threshold** across statements, branches, functions, and lines. The CI build will **fail** if coverage drops below this threshold.
 
 Coverage reports are:
+
 - Printed to the console (`text` and `text-summary`)
 - Published as a **GitHub Actions artifact** (HTML + LCOV)
 - Summarised in the **GitHub Actions job summary** table
