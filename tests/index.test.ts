@@ -23,6 +23,14 @@ jest.mock('../src/textUtils', () => ({
 }));
 
 describe('index.ts DOM interactions', () => {
+  // Helper function to set up document.readyState for controlled initialization
+  const setDocumentReadyState = (state: string): void => {
+    Object.defineProperty(document, 'readyState', {
+      writable: true,
+      value: state,
+    });
+  };
+
   beforeEach(() => {
     // Clear any existing modules
     jest.resetModules();
@@ -40,10 +48,7 @@ describe('index.ts DOM interactions', () => {
     `;
 
     // Set readyState to 'loading' to prevent immediate initialization
-    Object.defineProperty(document, 'readyState', {
-      writable: true,
-      value: 'loading',
-    });
+    setDocumentReadyState('loading');
 
     // Import the module - this will add the DOMContentLoaded event listener
     require('../src/index');
@@ -287,7 +292,8 @@ describe('index.ts DOM interactions', () => {
     });
 
     it('should handle missing DOM elements gracefully', () => {
-      // Clear modules and reset
+      // Re-initialize with different DOM structure to test graceful handling
+      // We need to reset modules here because we're testing a different initialization scenario
       jest.resetModules();
 
       // Remove all buttons
@@ -320,7 +326,8 @@ describe('index.ts DOM interactions', () => {
     });
 
     it('should return empty string when textarea is missing', () => {
-      // Clear modules and reset
+      // Re-initialize with different DOM structure to test getTextInput behavior
+      // We need to reset modules here because we're testing a different initialization scenario
       jest.resetModules();
 
       // Set up DOM without textarea
@@ -335,10 +342,7 @@ describe('index.ts DOM interactions', () => {
       `;
 
       // Set readyState to 'loading' to prevent immediate initialization
-      Object.defineProperty(document, 'readyState', {
-        writable: true,
-        value: 'loading',
-      });
+      setDocumentReadyState('loading');
 
       // Import and initialize
       require('../src/index');
