@@ -196,6 +196,7 @@ Always provide:
 
 - Build: `npm run build`
 - Test: `npm test`
+- Test with coverage: `npm run test:coverage`
 - Lint: `npm run lint`
 - Format: `npm run format`
 
@@ -206,3 +207,25 @@ Always provide:
 3. Run `npm run build`
 4. Run `npm test`
 5. Run `npm run lint`
+6. Open a pull request — GitHub Actions CI will run lint and test checks automatically
+
+## CI Pipeline
+
+The project has a GitHub Actions workflow (`.github/workflows/ci.yml`) that runs on every pull request targeting `main`.
+
+### Jobs:
+
+- **Lint** — runs ESLint and Prettier format check
+- **Test** — builds TypeScript, runs Jest with coverage, and uploads a coverage artifact
+
+### Coverage Requirements:
+
+- Minimum **70%** coverage is enforced globally for statements, branches, functions, and lines
+- Jest is configured with `coverageThreshold` in `jest.config.js`
+- Coverage reporters: `text`, `text-summary`, `lcov`, `html`, `json-summary`
+- The CI job writes a coverage summary table to the GitHub Actions job summary
+
+### When Suggesting Code:
+
+- Always ensure new code is accompanied by tests that maintain or improve the 70% coverage threshold
+- Do not lower coverage thresholds without explicit approval
