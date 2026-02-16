@@ -155,6 +155,41 @@ ai-test-bed/
 5. Run `npm run format` to ensure consistent formatting
 6. Open `index.html` in a browser or use `npm run serve`
 
+## CI Pipeline
+
+This project uses **GitHub Actions** to run automated checks on every pull request targeting `main`. The workflow lives in `.github/workflows/ci.yml` and includes two jobs:
+
+| Job      | What it checks                                       |
+| -------- | ---------------------------------------------------- |
+| **Lint** | ESLint rules and Prettier formatting                 |
+| **Test** | TypeScript build, Jest unit tests, and code coverage |
+
+### Coverage Requirements
+
+Jest is configured with a **minimum 70% coverage threshold** across statements, branches, functions, and lines. The CI build will **fail** if coverage drops below this threshold.
+
+Coverage reports are:
+
+- Printed to the console (`text` and `text-summary`)
+- Published as a **GitHub Actions artifact** (HTML + LCOV)
+- Summarised in the **GitHub Actions job summary** table
+
+To check coverage locally:
+
+```bash
+npm run test:coverage
+```
+
+### Branch Protection (manual step)
+
+To enforce these checks before merging, enable **branch protection rules** on `main` in the GitHub repository settings:
+
+1. Go to **Settings → Branches → Add rule**
+2. Set **Branch name pattern** to `main`
+3. Enable **Require status checks to pass before merging**
+4. Select the **Lint** and **Test** status checks
+5. Optionally enable **Require branches to be up to date before merging**
+
 ## Testing Best Practices
 
 - All utility functions have comprehensive test coverage
@@ -171,6 +206,7 @@ When adding new features:
 3. Ensure all tests pass (`npm test`)
 4. Ensure no linting errors (`npm run lint`)
 5. Format code (`npm run format`)
+6. Open a pull request — CI will run lint and test checks automatically
 
 ## License
 

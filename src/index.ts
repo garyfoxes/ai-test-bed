@@ -10,7 +10,7 @@ import { toUpperCase, toLowerCase, countLetters, countLettersPerWord } from './t
  * @param title - The title of the result
  * @param content - The content to display
  */
-function displayResult(title: string, content: string): void {
+export function displayResult(title: string, content: string): void {
   const resultDiv = document.getElementById('result');
   const resultTitle = document.getElementById('resultTitle');
   const resultContent = document.getElementById('resultContent');
@@ -26,7 +26,7 @@ function displayResult(title: string, content: string): void {
  * Gets the text input value from the textarea
  * @returns The current text input value
  */
-function getTextInput(): string {
+export function getTextInput(): string {
   const textInput = document.getElementById('textInput') as HTMLTextAreaElement;
   return textInput ? textInput.value : '';
 }
@@ -34,7 +34,7 @@ function getTextInput(): string {
 /**
  * Handles the uppercase button click
  */
-function handleUppercase(): void {
+export function handleUppercase(): void {
   const text = getTextInput();
   if (!text.trim()) {
     displayResult('Error', 'Please enter some text first!');
@@ -47,7 +47,7 @@ function handleUppercase(): void {
 /**
  * Handles the lowercase button click
  */
-function handleLowercase(): void {
+export function handleLowercase(): void {
   const text = getTextInput();
   if (!text.trim()) {
     displayResult('Error', 'Please enter some text first!');
@@ -60,7 +60,7 @@ function handleLowercase(): void {
 /**
  * Handles the count letters button click
  */
-function handleCountLetters(): void {
+export function handleCountLetters(): void {
   const text = getTextInput();
   if (!text.trim()) {
     displayResult('Error', 'Please enter some text first!');
@@ -84,7 +84,7 @@ function handleCountLetters(): void {
 /**
  * Initializes the application by setting up event listeners
  */
-function init(): void {
+export function init(): void {
   const uppercaseBtn = document.getElementById('uppercaseBtn');
   const lowercaseBtn = document.getElementById('lowercaseBtn');
   const countBtn = document.getElementById('countBtn');
