@@ -107,6 +107,9 @@ describe('index.ts — DOM functions', () => {
       handleUppercase();
 
       expect(document.getElementById('resultTitle')!.textContent).toBe('Error');
+      expect(document.getElementById('resultContent')!.textContent).toBe(
+        'Please enter some text first!'
+      );
     });
   });
 
@@ -130,6 +133,9 @@ describe('index.ts — DOM functions', () => {
       handleLowercase();
 
       expect(document.getElementById('resultTitle')!.textContent).toBe('Error');
+      expect(document.getElementById('resultContent')!.textContent).toBe(
+        'Please enter some text first!'
+      );
     });
   });
 
@@ -156,6 +162,9 @@ describe('index.ts — DOM functions', () => {
       handleCountLetters();
 
       expect(document.getElementById('resultTitle')!.textContent).toBe('Error');
+      expect(document.getElementById('resultContent')!.textContent).toBe(
+        'Please enter some text first!'
+      );
     });
   });
 
