@@ -150,10 +150,50 @@ describe('functionName', () => {
 ## Key Dependencies
 
 - **TypeScript 5.x**: Static typing
-- **Jest 29.x**: Testing framework
+- **Jest 29.x**: Unit testing framework
+- **Playwright**: End-to-end (E2E) browser testing
 - **ESLint 8.x**: Linting
 - **Prettier 3.x**: Code formatting
 - **ts-jest**: TypeScript support for Jest
+
+## E2E Testing (Playwright)
+
+### Overview
+
+End-to-end tests live in the `e2e/` directory and use [Playwright](https://playwright.dev/). They run against the real app served by `http-server` on port 8080.
+
+### Running E2E Tests
+
+- Run all: `npm run test:e2e`
+- Interactive UI mode: `npm run test:e2e:ui`
+- HTML report: `npx playwright show-report`
+
+### Writing Resilient Tests
+
+- **Always wait for elements** before asserting — use `waitFor({ state: 'visible' })` on result elements and headings before checking text content.
+- **Use Playwright auto-retrying assertions** (`toHaveText`, `toBeVisible`, `not.toBeEmpty`) instead of raw `textContent()` checks wherever possible.
+- **Read `textContent()` only after** an auto-retrying assertion has confirmed the element is populated. This prevents flaky reads on slow networks.
+- **Do not hard-code waits** (`page.waitForTimeout`). Rely on Playwright built-in timeouts configured in `playwright.config.ts` instead.
+- **Timeouts are configured globally** in `playwright.config.ts`:
+  - Test timeout: 30 s
+  - Expect timeout: 10 s
+  - Navigation timeout: 15 s
+  - Action timeout: 10 s
+- **Retries**: 1 locally, 2 on CI. Traces are captured on first retry for debugging.
+
+### Test File Conventions
+
+- E2E specs: `e2e/<feature>.spec.ts`
+- Name tests descriptively using the pattern: `'<feature> does expected thing'`
+- Group related tests under a `test.describe` block
+- Use `test.beforeEach` for common navigation
+
+### When Adding New Features
+
+1. Add unit tests in `tests/` (Jest)
+2. Add E2E tests in `e2e/` (Playwright)
+3. Ensure the E2E test waits for results before asserting
+4. Run `npm run test:e2e` to verify before committing
 
 ## Build Process
 
@@ -195,19 +235,23 @@ Always provide:
 ### Running Commands:
 
 - Build: `npm run build`
-- Test: `npm test`
+- Test (unit): `npm test`
 - Test with coverage: `npm run test:coverage`
+- Test (E2E): `npm run test:e2e`
+- Test (E2E UI): `npm run test:e2e:ui`
 - Lint: `npm run lint`
 - Format: `npm run format`
 
 ### Making Changes:
 
 1. Edit TypeScript in `src/`
-2. Add tests in `tests/`
-3. Run `npm run build`
-4. Run `npm test`
-5. Run `npm run lint`
-6. Open a pull request — GitHub Actions CI will run lint and test checks automatically
+2. Add unit tests in `tests/`
+3. Add or update E2E tests in `e2e/`
+4. Run `npm run build`
+5. Run `npm test`
+6. Run `npm run test:e2e`
+7. Run `npm run lint`
+8. Open a pull request — GitHub Actions CI will run lint and test checks automatically
 
 ## CI Pipeline
 
@@ -217,6 +261,7 @@ The project has a GitHub Actions workflow (`.github/workflows/ci.yml`) that runs
 
 - **Lint** — runs ESLint and Prettier format check
 - **Test** — builds TypeScript, runs Jest with coverage, and uploads a coverage artifact
+- **E2E Tests** — installs Chromium, builds TypeScript, runs Playwright E2E tests, and uploads the report on failure
 
 ### Coverage Requirements:
 
