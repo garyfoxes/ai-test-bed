@@ -48,11 +48,9 @@ test.describe('Co-Pilot Playground - Text Utilities', () => {
     await resultHeading.waitFor({ state: 'visible' });
     await expect(resultHeading).toHaveText('Letter Count:');
     const resultContent = page.locator('#resultContent');
-    await expect(resultContent).not.toBeEmpty();
-    const resultText = await resultContent.textContent();
-    expect(resultText).toContain('Total letters: 10');
-    expect(resultText).toContain('"Hello" → 5 letters');
-    expect(resultText).toContain('"World" → 5 letters');
+    await expect(resultContent).toContainText('Total letters: 10');
+    await expect(resultContent).toContainText('"Hello" → 5 letters');
+    await expect(resultContent).toContainText('"World" → 5 letters');
   });
 
   test('shows error when input is empty', async ({ page }) => {
@@ -90,9 +88,7 @@ test.describe('Co-Pilot Playground - Text Utilities', () => {
 
     // Toggle to Count Letters
     await page.getByRole('button', { name: 'Count Letters' }).click();
-    await expect(resultContent).not.toBeEmpty();
-    const resultText = await resultContent.textContent();
-    expect(resultText).toContain('Total letters: 9');
+    await expect(resultContent).toContainText('Total letters: 9');
   });
 
   test('handles special characters and numbers', async ({ page }) => {
@@ -104,9 +100,7 @@ test.describe('Co-Pilot Playground - Text Utilities', () => {
     await expect(resultContent).toHaveText('HELLO 123! @#$');
 
     await page.getByRole('button', { name: 'Count Letters' }).click();
-    await expect(resultContent).not.toBeEmpty();
-    const resultText = await resultContent.textContent();
-    expect(resultText).toContain('Total letters: 5');
+    await expect(resultContent).toContainText('Total letters: 5');
   });
 
   test('result section is hidden initially', async ({ page }) => {
