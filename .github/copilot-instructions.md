@@ -261,6 +261,7 @@ The project has a GitHub Actions workflow (`.github/workflows/ci.yml`) that runs
 
 - **Lint** — runs ESLint and Prettier format check
 - **Test** — builds TypeScript, runs Jest with coverage, and uploads a coverage artifact
+- **E2E Tests** — installs Chromium, builds TypeScript, runs Playwright E2E tests, and uploads the report on failure
 
 ### Coverage Requirements:
 

@@ -3,6 +3,7 @@ import { test, expect } from '@playwright/test';
 test.describe('Co-Pilot Playground - Text Utilities', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
+    await page.getByRole('heading', { level: 1 }).waitFor({ state: 'visible' });
   });
 
   test('page has correct title and heading', async ({ page }) => {
