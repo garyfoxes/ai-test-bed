@@ -3,7 +3,13 @@
  * Handles DOM interactions and connects UI to text utility functions
  */
 
-import { toUpperCase, toLowerCase, countLetters, countLettersPerWord } from './textUtils.js';
+import {
+  toUpperCase,
+  toLowerCase,
+  toTitleCase,
+  countLetters,
+  countLettersPerWord,
+} from './textUtils.js';
 
 /**
  * Displays the result in the result container
@@ -58,6 +64,19 @@ export function handleLowercase(): void {
 }
 
 /**
+ * Handles the title case button click
+ */
+export function handleTitleCase(): void {
+  const text = getTextInput();
+  if (!text.trim()) {
+    displayResult('Error', 'Please enter some text first!');
+    return;
+  }
+  const result = toTitleCase(text);
+  displayResult('Title Case Result:', result);
+}
+
+/**
  * Handles the count letters button click
  */
 export function handleCountLetters(): void {
@@ -87,6 +106,7 @@ export function handleCountLetters(): void {
 export function init(): void {
   const uppercaseBtn = document.getElementById('uppercaseBtn');
   const lowercaseBtn = document.getElementById('lowercaseBtn');
+  const titleCaseBtn = document.getElementById('titleCaseBtn');
   const countBtn = document.getElementById('countBtn');
 
   if (uppercaseBtn) {
@@ -95,6 +115,10 @@ export function init(): void {
 
   if (lowercaseBtn) {
     lowercaseBtn.addEventListener('click', handleLowercase);
+  }
+
+  if (titleCaseBtn) {
+    titleCaseBtn.addEventListener('click', handleTitleCase);
   }
 
   if (countBtn) {

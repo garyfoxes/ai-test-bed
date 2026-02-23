@@ -14,6 +14,7 @@ function setupDOM(): void {
     <textarea id="textInput"></textarea>
     <button id="uppercaseBtn">Uppercase</button>
     <button id="lowercaseBtn">Lowercase</button>
+    <button id="titleCaseBtn">Title Case</button>
     <button id="countBtn">Count Letters</button>
     <div id="result">
       <h2 id="resultTitle"></h2>
@@ -139,6 +140,35 @@ describe('index.ts — DOM functions', () => {
     });
   });
 
+  // ── handleTitleCase ────────────────────────────────────────────────
+
+  describe('handleTitleCase', () => {
+    it('should display smart title-case text', async () => {
+      const { handleTitleCase } = await loadModule();
+      (document.getElementById('textInput') as HTMLTextAreaElement).value =
+        'war and peace in the time of cholera';
+
+      handleTitleCase();
+
+      expect(document.getElementById('resultTitle')!.textContent).toBe('Title Case Result:');
+      expect(document.getElementById('resultContent')!.textContent).toBe(
+        'War and Peace in the Time of Cholera'
+      );
+    });
+
+    it('should show error when input is empty', async () => {
+      const { handleTitleCase } = await loadModule();
+      (document.getElementById('textInput') as HTMLTextAreaElement).value = '';
+
+      handleTitleCase();
+
+      expect(document.getElementById('resultTitle')!.textContent).toBe('Error');
+      expect(document.getElementById('resultContent')!.textContent).toBe(
+        'Please enter some text first!'
+      );
+    });
+  });
+
   // ── handleCountLetters ─────────────────────────────────────────────
 
   describe('handleCountLetters', () => {
@@ -182,6 +212,9 @@ describe('index.ts — DOM functions', () => {
 
       document.getElementById('lowercaseBtn')!.click();
       expect(document.getElementById('resultContent')!.textContent).toBe('test');
+
+      document.getElementById('titleCaseBtn')!.click();
+      expect(document.getElementById('resultContent')!.textContent).toBe('Test');
 
       document.getElementById('countBtn')!.click();
       expect(document.getElementById('resultContent')!.textContent).toContain('Total letters: 4');
