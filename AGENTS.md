@@ -2,7 +2,7 @@
 
 This document provides context and guidelines for GitHub Copilot when working with this codebase.
 
-Note: `.github/copilot-instructions.md` points to this file so both Copilot and Codex follow one shared instruction source.
+Note: [`.github/copilot-instructions.md`](.github/copilot-instructions.md) references this file so both Copilot and Codex follow one shared instruction source for agent instructions.
 
 ## Project Overview
 
@@ -261,7 +261,7 @@ Always provide:
 2. Fill in each section with concrete details for the current changes.
 3. If a section does not apply, write `N/A` instead of leaving placeholders.
 
-### Branch Naming (Guidance Only):
+### Branch Naming (Guidance Only)
 
 Use these branch name patterns as a team convention for consistency:
 
