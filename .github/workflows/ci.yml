@@ -4,6 +4,10 @@ on:
   pull_request:
     branches: [main]
 
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
@@ -11,6 +15,7 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       - name: Checkout repository
@@ -34,6 +39,7 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
       - name: Checkout repository
@@ -54,6 +60,28 @@ jobs:
       - name: Run tests with coverage
         run: npm run test:coverage
 
+      - name: Coverage summary
+        if: always()
+        run: |
+          echo "## Test Coverage Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f coverage/coverage-summary.json ]; then
+            node -e "
+              const cs = require('./coverage/coverage-summary.json').total;
+              const fmt = (v) => v.pct + '%';
+              console.log('| Metric | Coverage |');
+              console.log('|--------|----------|');
+              console.log('| Statements | ' + fmt(cs.statements) + ' |');
+              console.log('| Branches | ' + fmt(cs.branches) + ' |');
+              console.log('| Functions | ' + fmt(cs.functions) + ' |');
+              console.log('| Lines | ' + fmt(cs.lines) + ' |');
+            " >> $GITHUB_STEP_SUMMARY
+          else
+            echo "Coverage summary not available." >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "_Minimum required coverage: 70%_" >> $GITHUB_STEP_SUMMARY
+
       - name: Upload coverage report
         if: always()
         uses: actions/upload-artifact@v4
@@ -65,6 +93,7 @@ jobs:
   e2e:
     name: E2E Tests
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
       - name: Checkout repository
@@ -95,25 +124,3 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 14
-
-      - name: Coverage summary
-        if: always()
-        run: |
-          echo "## Test Coverage Report" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          if [ -f coverage/coverage-summary.json ]; then
-            node -e "
-              const cs = require('./coverage/coverage-summary.json').total;
-              const fmt = (v) => v.pct + '%';
-              console.log('| Metric | Coverage |');
-              console.log('|--------|----------|');
-              console.log('| Statements | ' + fmt(cs.statements) + ' |');
-              console.log('| Branches | ' + fmt(cs.branches) + ' |');
-              console.log('| Functions | ' + fmt(cs.functions) + ' |');
-              console.log('| Lines | ' + fmt(cs.lines) + ' |');
-            " >> $GITHUB_STEP_SUMMARY
-          else
-            echo "Coverage summary not available." >> $GITHUB_STEP_SUMMARY
-          fi
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "_Minimum required coverage: 70%_" >> $GITHUB_STEP_SUMMARY
