@@ -255,6 +255,12 @@ Always provide:
 7. Run `npm run lint`
 8. Open a pull request — GitHub Actions CI will run lint and test checks automatically
 
+### Pull Requests:
+
+1. Use `.github/pull_request_template.md` when creating or updating pull request descriptions.
+2. Fill in each section with concrete details for the current changes.
+3. If a section does not apply, write `N/A` instead of leaving placeholders.
+
 ### Branch Naming (Guidance Only):
 
 Use these branch name patterns as a team convention for consistency:
