@@ -199,6 +199,11 @@ To enforce these checks before merging, enable **branch protection rules** on `m
 
 ## Contributing
 
+### Branch Naming Convention (Guidance Only)
+
+For the canonical branch naming convention, see [`AGENTS.md`](AGENTS.md#branch-naming-guidance-only).
+This is guidance only and is not enforced by CI or Git hooks.
+
 When adding new features:
 
 1. Write the functionality in TypeScript
