@@ -199,6 +199,26 @@ To enforce these checks before merging, enable **branch protection rules** on `m
 
 ## Contributing
 
+### Branch Naming Convention (Guidance Only)
+
+Use these branch name patterns as a team convention for consistency:
+
+- `feat/<kebab-case-slug>`
+- `bug/<kebab-case-slug>`
+- `chore/<kebab-case-slug>`
+
+Slug format rules:
+
+- Lowercase letters only
+- Words separated by hyphens (`-`)
+
+Examples:
+
+- Valid: `feat/add-export-button`, `bug/fix-empty-input-crash`, `chore/update-deps`
+- Invalid: `feature/add-export`, `bug/fix_empty_input`, `Chore/update-deps`
+
+This is guidance only and is not enforced by CI or Git hooks.
+
 When adding new features:
 
 1. Write the functionality in TypeScript
