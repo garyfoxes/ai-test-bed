@@ -2,7 +2,13 @@
  * Unit tests for text utility functions
  */
 
-import { toUpperCase, toLowerCase, countLetters, countLettersPerWord } from '../src/textUtils';
+import {
+  toUpperCase,
+  toLowerCase,
+  toTitleCase,
+  countLetters,
+  countLettersPerWord,
+} from '../src/textUtils';
 
 describe('toUpperCase', () => {
   it('should convert lowercase text to uppercase', () => {
@@ -53,6 +59,46 @@ describe('toLowerCase', () => {
 
   it('should handle special characters', () => {
     expect(toLowerCase('HELLO-WORLD_TEST')).toBe('hello-world_test');
+  });
+});
+
+describe('toTitleCase', () => {
+  it('should convert simple lowercase text to title case', () => {
+    expect(toTitleCase('hello world')).toBe('Hello World');
+  });
+
+  it('should keep small words lowercase in the middle of a title', () => {
+    expect(toTitleCase('war and peace in the time of cholera')).toBe(
+      'War and Peace in the Time of Cholera'
+    );
+  });
+
+  it('should capitalize first and last words even when they are small words', () => {
+    expect(toTitleCase('the lord of the rings')).toBe('The Lord of the Rings');
+  });
+
+  it('should preserve punctuation while title-casing words', () => {
+    expect(toTitleCase('hello, the world!')).toBe('Hello, the World!');
+  });
+
+  it('should handle apostrophes correctly', () => {
+    expect(toTitleCase("don't stop believing")).toBe("Don't Stop Believing");
+  });
+
+  it('should handle hyphenated words correctly', () => {
+    expect(toTitleCase('state-of-the-art design')).toBe('State-of-the-Art Design');
+  });
+
+  it('should preserve multiple spaces and newlines', () => {
+    expect(toTitleCase('hello   world\nand universe')).toBe('Hello   World\nand Universe');
+  });
+
+  it('should handle empty string', () => {
+    expect(toTitleCase('')).toBe('');
+  });
+
+  it('should return non-letter input unchanged', () => {
+    expect(toTitleCase('1234 !@#$')).toBe('1234 !@#$');
   });
 });
 

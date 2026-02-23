@@ -1,11 +1,12 @@
 # Co-Pilot Playground
 
-A simple web application playground for testing Co-Pilot functionality. This test bed provides text manipulation utilities including uppercase conversion, lowercase conversion, and letter counting.
+A simple web application playground for testing Co-Pilot functionality. This test bed provides text manipulation utilities including uppercase conversion, lowercase conversion, smart title-case conversion, and letter counting.
 
 ## Features
 
 - **Convert to Uppercase**: Transform any text to uppercase
 - **Convert to Lowercase**: Transform any text to lowercase
+- **Convert to Title Case**: Apply smart AP-style title casing while preserving punctuation and spacing
 - **Count Letters**: Count total letters and letters per word in the input text
 - Clean, modern UI with gradient styling
 - Fully typed with TypeScript
